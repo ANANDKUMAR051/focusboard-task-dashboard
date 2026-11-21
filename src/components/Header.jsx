@@ -1,10 +1,16 @@
-import { ChevronDown, LayoutGrid } from 'lucide-react';
+import { ChevronDown, LayoutGrid } from "lucide-react";
 
 export default function Header({ section, onNavigate }) {
   return (
     <header className="top-header">
-      <button className="mobile-brand" type="button" onClick={() => onNavigate('Overview')}>
-        <span className="brand-symbol"><LayoutGrid size={17} /></span>
+      <button
+        className="mobile-brand"
+        type="button"
+        onClick={() => onNavigate("Overview")}
+      >
+        <span className="brand-symbol">
+          <LayoutGrid size={17} />
+        </span>
         <strong>FocusBoard</strong>
       </button>
       <div className="breadcrumb">

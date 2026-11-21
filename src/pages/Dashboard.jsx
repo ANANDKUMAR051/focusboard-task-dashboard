@@ -1,21 +1,22 @@
-import { Plus } from 'lucide-react';
-import { useCallback, useMemo, useState } from 'react';
-import { useTasks } from '../context/TaskContext';
-import Sidebar, { navigation } from '../components/Sidebar';
-import Header from '../components/Header';
-import StatCard from '../components/StatCard';
-import FocusNotes from '../components/FocusNotes';
-import FilterBar from '../components/FilterBar';
-import TaskList from '../components/TaskList';
-import TaskForm from '../components/TaskForm';
-import ConfirmDialog from '../components/ConfirmDialog';
+import { Plus } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
+import { useTasks } from "../context/TaskContext";
+import Sidebar, { navigation } from "../components/Sidebar";
+import Header from "../components/Header";
+import StatCard from "../components/StatCard";
+import FocusNotes from "../components/FocusNotes";
+import FilterBar from "../components/FilterBar";
+import TaskList from "../components/TaskList";
+import TaskForm from "../components/TaskForm";
+import ConfirmDialog from "../components/ConfirmDialog";
 
 export default function Dashboard() {
-  const { tasks, stats, addTask, editTask, deleteTask, updateStatus } = useTasks();
-  const [section, setSection] = useState('Overview');
-  const [search, setSearch] = useState('');
-  const [status, setStatus] = useState('All');
-  const [priority, setPriority] = useState('All');
+  const { tasks, stats, addTask, editTask, deleteTask, updateStatus } =
+    useTasks();
+  const [section, setSection] = useState("Overview");
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("All");
+  const [priority, setPriority] = useState("All");
   const [formOpen, setFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
@@ -45,31 +46,34 @@ export default function Dashboard() {
 
   function navigate(name) {
     setSection(name);
-    if (name === 'My tasks') {
+    if (name === "My tasks") {
       setShowAll(true);
-      document.getElementById('tasks')?.scrollIntoView({ behavior: 'smooth' });
-    } else if (name === 'Overview') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (name === 'Calendar') {
+      document.getElementById("tasks")?.scrollIntoView({ behavior: "smooth" });
+    } else if (name === "Overview") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (name === "Calendar") {
       setShowAll(true);
-      document.getElementById('tasks')?.scrollIntoView({ behavior: 'smooth' });
-    } else if (name === 'Settings') {
-      document.getElementById('settings-panel')?.showModal();
+      document.getElementById("tasks")?.scrollIntoView({ behavior: "smooth" });
+    } else if (name === "Settings") {
+      document.getElementById("settings-panel")?.showModal();
     }
   }
 
   const filteredTasks = useMemo(() => {
-    return tasks.filter(task => {
-      const matchesTitle = task.title.toLowerCase().includes(search.trim().toLowerCase());
-      const matchesStatus = status === 'All' || task.status === status;
-      const matchesPriority = priority === 'All' || task.priority === priority;
+    return tasks.filter((task) => {
+      const matchesTitle = task.title
+        .toLowerCase()
+        .includes(search.trim().toLowerCase());
+      const matchesStatus = status === "All" || task.status === status;
+      const matchesPriority = priority === "All" || task.priority === priority;
       return matchesTitle && matchesStatus && matchesPriority;
     });
   }, [tasks, search, status, priority]);
 
-  const visibleTasks = showAll || search || status !== 'All' || priority !== 'All'
-    ? filteredTasks
-    : filteredTasks.slice(0, 3);
+  const visibleTasks =
+    showAll || search || status !== "All" || priority !== "All"
+      ? filteredTasks
+      : filteredTasks.slice(0, 3);
 
   return (
     <div className="app-shell">
@@ -82,16 +86,40 @@ export default function Dashboard() {
               <h1>Your work, in focus.</h1>
               <p>Plan your day, stay organized, and celebrate small wins.</p>
             </div>
-            <button type="button" className="primary-button desktop-new" onClick={openCreate}>New task</button>
+            <button
+              type="button"
+              className="primary-button desktop-new"
+              onClick={openCreate}
+            >
+              New task
+            </button>
           </div>
 
-          <FocusNotes percentage={stats.percentage} inProgress={stats.inProgress} />
+          <FocusNotes
+            percentage={stats.percentage}
+            inProgress={stats.inProgress}
+          />
 
           <div className="overview-heading">Overview</div>
           <div className="stats-grid">
-            <StatCard type="total" label="Total tasks" value={stats.total} detail="Across all projects" />
-            <StatCard type="progress" label="In progress" value={stats.inProgress} detail="Keep the momentum" />
-            <StatCard type="completed" label="Completed" value={stats.completed} detail="Great work this week" />
+            <StatCard
+              type="total"
+              label="Total tasks"
+              value={stats.total}
+              detail="Across all projects"
+            />
+            <StatCard
+              type="progress"
+              label="In progress"
+              value={stats.inProgress}
+              detail="Keep the momentum"
+            />
+            <StatCard
+              type="completed"
+              label="Completed"
+              value={stats.completed}
+              detail="Great work this week"
+            />
           </div>
 
           <section className="tasks-section" id="tasks">
@@ -100,10 +128,21 @@ export default function Dashboard() {
                 <h2>My tasks</h2>
                 <p>Manage and track everything in one place.</p>
               </div>
-              <button type="button" className="view-all" onClick={() => setShowAll(value => !value)}>
-                {showAll ? 'Show less' : 'View all tasks'}
+              <button
+                type="button"
+                className="view-all"
+                onClick={() => setShowAll((value) => !value)}
+              >
+                {showAll ? "Show less" : "View all tasks"}
               </button>
-              <button type="button" className="mobile-add" onClick={openCreate} aria-label="Create new task"><Plus size={22} /></button>
+              <button
+                type="button"
+                className="mobile-add"
+                onClick={openCreate}
+                aria-label="Create new task"
+              >
+                <Plus size={22} />
+              </button>
             </div>
             <FilterBar
               status={status}
@@ -114,31 +153,55 @@ export default function Dashboard() {
               onSearch={setSearch}
               counts={stats}
             />
-            <TaskList tasks={visibleTasks} onEdit={openEdit} onDelete={setDeleteTarget} onStatus={updateStatus} />
+            <TaskList
+              tasks={visibleTasks}
+              onEdit={openEdit}
+              onDelete={setDeleteTarget}
+              onStatus={updateStatus}
+            />
           </section>
         </div>
       </main>
       <nav className="mobile-nav" aria-label="Mobile navigation">
         {navigation.map(({ name, icon: Icon }) => (
-          <button type="button" key={name} className={section === name ? 'active' : ''} onClick={() => navigate(name)}>
+          <button
+            type="button"
+            key={name}
+            className={section === name ? "active" : ""}
+            onClick={() => navigate(name)}
+          >
             <Icon size={19} />
-            <span>{name === 'My tasks' ? 'Tasks' : name}</span>
+            <span>{name === "My tasks" ? "Tasks" : name}</span>
           </button>
         ))}
       </nav>
       <dialog className="settings-dialog" id="settings-panel">
         <h2>Workspace settings</h2>
-        <p>Tasks are stored in this browser. You can manage them from My tasks.</p>
-        <form method="dialog"><button type="submit" className="primary-button">Close</button></form>
+        <p>
+          Tasks are stored in this browser. You can manage them from My tasks.
+        </p>
+        <form method="dialog">
+          <button type="submit" className="primary-button">
+            Close
+          </button>
+        </form>
       </dialog>
       {formOpen && (
-        <TaskForm key={editingTask?.id || 'new'} task={editingTask} onSave={saveTask} onClose={closeForm} />
+        <TaskForm
+          key={editingTask?.id || "new"}
+          task={editingTask}
+          onSave={saveTask}
+          onClose={closeForm}
+        />
       )}
       {deleteTarget && (
         <ConfirmDialog
           task={deleteTarget}
           onCancel={closeDelete}
-          onConfirm={() => { deleteTask(deleteTarget.id); setDeleteTarget(null); }}
+          onConfirm={() => {
+            deleteTask(deleteTarget.id);
+            setDeleteTarget(null);
+          }}
         />
       )}
     </div>

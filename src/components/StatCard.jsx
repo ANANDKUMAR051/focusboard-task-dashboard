@@ -1,4 +1,4 @@
-import { Check, Clock3, List } from 'lucide-react';
+import { Check, Clock3, List } from "lucide-react";
 
 const icons = { total: List, progress: Clock3, completed: Check };
 
@@ -7,7 +7,9 @@ export default function StatCard({ type, label, value, detail }) {
 
   return (
     <article className={`stat-card stat-${type}`}>
-      <span className="stat-icon"><Icon size={18} /></span>
+      <span className="stat-icon">
+        <Icon size={18} />
+      </span>
       <div className="stat-details">
         <span className="stat-label">{label}</span>
         <div className="stat-bottom">
