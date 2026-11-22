@@ -2,9 +2,11 @@ import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { focusNotes } from "../data/focusNotes";
 
-export default function FocusNotes({ percentage, inProgress }) {
+export default function FocusNotes({ percentage, inProgress, nextTask }) {
   const [active, setActive] = useState(0);
   const note = focusNotes[active];
+  const nextTaskTitle = nextTask?.title ?? "All tasks completed!";
+  const nextTaskLabel = nextTask ? "NEXT UP" : "ALL DONE";
 
   function move(direction) {
     setActive(
@@ -39,18 +41,28 @@ export default function FocusNotes({ percentage, inProgress }) {
           ))}
         </div>
       </div>
-      <div className="focus-preview" aria-hidden="true">
+      <div
+        className="focus-preview"
+        aria-label={`Next task: ${nextTaskTitle}. ${percentage}% of all tasks completed.`}
+      >
         <div className="preview-check">
           <Check size={17} />
         </div>
         <div className="preview-copy">
-          <small>{note.label}</small>
-          <strong>{note.task}</strong>
-          <div className="preview-progress">
+          <small>{nextTaskLabel}</small>
+          <strong title={nextTaskTitle}>{nextTaskTitle}</strong>
+          <div
+            className="preview-progress"
+            role="progressbar"
+            aria-label="Overall task completion"
+            aria-valuenow={percentage}
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
             <span>
-              <i style={{ width: `${note.progress}%` }} />
+              <i style={{ width: `${percentage}%` }} />
             </span>
-            <b>{note.progress}%</b>
+            <b>{percentage}%</b>
           </div>
         </div>
       </div>

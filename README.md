@@ -56,3 +56,18 @@ Hosted URL: `https://YOUR-PROJECT.vercel.app`
 - The screenshot references include the visual design but do not expose every Figma measurement, so minor spacing differences may remain.
 - On mobile, the carousel follows the Figma mobile card style, with compact slide controls added to meet the interaction requirement.
 - The screenshots folder contains the provided Figma references, not browser screenshots of the running application.
+
+
+## Actual application screenshots
+
+The `screenshots/` directory contains five screenshots supplied from the running application:
+
+- `focus_board_desktop.png` — desktop dashboard
+- `desktop_view.png` — create-task modal on desktop
+- `mobile_view.jpeg` — mobile overview
+- `mobile_view2.jpeg` — mobile task list
+- `mobile_view3.jpeg` — mobile workspace settings
+
+## Dynamic Focus Notes progress
+
+The Focus Notes card shows the same real completion percentage on all three slides, calculated from completed tasks divided by all tasks. The progress bar width and text update whenever tasks change. The **Next Up** title is the earliest-due task whose status is not Completed. When no unfinished tasks remain, it displays **All tasks completed!**. The three slides retain their distinct motivational messages.

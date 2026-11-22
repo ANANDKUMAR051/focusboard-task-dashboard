@@ -70,6 +70,19 @@ export default function Dashboard() {
     });
   }, [tasks, search, status, priority]);
 
+  // Choose the earliest due unfinished task from the complete task list.
+  // Completed tasks are excluded, and undated tasks are placed last.
+  const nextTask = useMemo(() => {
+    const unfinished = tasks.filter((task) => task.status !== "Completed");
+    return (
+      [...unfinished].sort((first, second) => {
+        const firstDate = first.dueDate || "9999-12-31";
+        const secondDate = second.dueDate || "9999-12-31";
+        return firstDate.localeCompare(secondDate);
+      })[0] ?? null
+    );
+  }, [tasks]);
+
   const visibleTasks =
     showAll || search || status !== "All" || priority !== "All"
       ? filteredTasks
@@ -98,6 +111,7 @@ export default function Dashboard() {
           <FocusNotes
             percentage={stats.percentage}
             inProgress={stats.inProgress}
+            nextTask={nextTask}
           />
 
           <div className="overview-heading">Overview</div>

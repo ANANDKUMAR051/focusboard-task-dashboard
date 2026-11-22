@@ -11,6 +11,7 @@ export default function FilterBar({
 }) {
   const tabs = [
     { label: "All tasks", value: "All" },
+    { label: "To do", value: "To Do" },
     { label: "In progress", value: "In Progress" },
     { label: "Completed", value: "Completed" },
   ];
